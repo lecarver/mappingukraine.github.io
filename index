@@ -1,1 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" I>
+<meta name="viewport" content=""width=device-width, initial-scale="1.9"›
+<!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+     integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
+     crossorigin=""/>
 
+ <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+     integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
+     crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+      integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
+      crossorigin=""/>
+
+<!--Adding our custom CSS file-->
+<link rel="stylesheet" type="text/css" href="css/map_style.css" >
+
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+      integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
+      crossorigin=""></script>
+  <title>Basemap</title>
+  <script src = "javascript/secret_keys.js"></script>
+  <!--All styling comes from the external css file-->
+  <!-- <link rel = "stylesheet", type = "text/css" href = "css/main_style.css"> -->
+  <script src = "javascript/external.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/opencagedata/leaflet-opencage-search@d4cbd36122efc8d17152b4177ed0e12165305441/dist/css/L.Control.OpenCageData.Search.min.css"/>
+<script src="https://cdn.jsdelivr.net/gh/opencagedata/leaflet-opencage-search@d4cbd36122efc8d17152b4177ed0e12165305441/dist/js/L.Control.OpenCageSearch.min.js"></script>
+
+
+</head>
+<body>
+<div id="mapid" style="width: 1000px; height: 700px; margin: auto;">
+  <script>
+
+//Adjust map screen control to allow full screen plugin
+    var mymap = L.map('mapid',{zoomControl: false});
+
+    var Stamen_Toner = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}', {
+    	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    	subdomains: 'abcd',
+    	minZoom: 2,
+    	maxZoom: 20,
+    	ext: 'png',
+      noWrap: true
+    }).addTo(mymap);
+
+    var ZoomViewer = L.Control.extend({
+      onAdd: function(){
+        var gauge = L.DomUtil.create('div');
+        gauge.style.width = '200px';
+        gauge.style.background = 'rgba(255, 255, 255, 0.5)';
+        gauge.style.textAlign = "left";
+        mymap.on('zoomstart zoom zoomend', function(ev){
+          gauge.innerHTML = 'Zoom level:' + mymap.getZoom();
+        })
+        return gauge;
+      }
+    });
+
+    (new ZoomViewer).addTo(mymap);
+    mymap.setView([49, 32], 6);
+  </script>
+</div>
+</body>
