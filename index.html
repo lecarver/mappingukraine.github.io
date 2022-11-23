@@ -14,38 +14,70 @@
       integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
       crossorigin=""/>
 
-<!--Adding our custom CSS file-->
-<link rel="stylesheet" type="text/css" href="css/map_style.css" >
-
   <!-- Make sure you put this AFTER Leaflet's CSS -->
 <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
       integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
       crossorigin=""></script>
   <title>Basemap</title>
-  <script src = "javascript/secret_keys.js"></script>
-  <!--All styling comes from the external css file-->
-  <!-- <link rel = "stylesheet", type = "text/css" href = "css/main_style.css"> -->
-  <script src = "javascript/external.js"></script>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/opencagedata/leaflet-opencage-search@d4cbd36122efc8d17152b4177ed0e12165305441/dist/css/L.Control.OpenCageData.Search.min.css"/>
 <script src="https://cdn.jsdelivr.net/gh/opencagedata/leaflet-opencage-search@d4cbd36122efc8d17152b4177ed0e12165305441/dist/js/L.Control.OpenCageSearch.min.js"></script>
-
+<style>
+  @import url(https://fonts.googleapis.com/css?family=Open + Sans);
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", sans-serif;
+  }
+  #info {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 20vw;
+    padding: 1em;
+  }
+  #mapid {
+    position: fixed;
+    top: 0;
+    left: 20vw;
+    bottom: 0;
+    right: 0;
+  }
+  .leaflet-bottom.leaflet-left {
+    width: 100%;
+  }
+  .leaflet-control-container .leaflet-timeline-controls {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 15px;
+  }
+</style>
 
 </head>
 <body>
-<div id="mapid" style="width: 1000px; height: 700px; margin: auto;">
+  <div id="info">
+    <h1>Conflict Events</h1>
+    <h2>Over the last 2 weeks</h2>
+    <h3>Currently displayed:</h3>
+    <ul id="displayed-list"></ul>
+  </div>
+<div id="mapid">
   <script>
 
 //Adjust map screen control to allow full screen plugin
-    var mymap = L.map('mapid',{zoomControl: false});
+    var mymap = L.map('mapid',{
+      zoomSnap: 0.25,
+      maxBounds: [
+        [90, -180],
+        [-90, 180],
+      ],});
 
-    var Stamen_Toner = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}', {
-    	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    	subdomains: 'abcd',
-    	minZoom: 2,
-    	maxZoom: 20,
-    	ext: 'png',
-      noWrap: true
+    var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+  	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+  	maxZoom: 16
     }).addTo(mymap);
 
     var ZoomViewer = L.Control.extend({
@@ -62,7 +94,7 @@
     });
 
     (new ZoomViewer).addTo(mymap);
-    mymap.setView([49, 32], 6);
+    mymap.setView([49, 32], 7);
   </script>
 </div>
 </body>
