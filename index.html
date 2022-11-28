@@ -17,17 +17,24 @@
 <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
       integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
       crossorigin=""></script>
+
+<!-- FONT STYLESHEETS -->
+<link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
+
+<!--TIMESLIDER PLUGIN SCRIPTS-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.1/dist/leaflet.timedimension.control.min.css" />
+
   <title>Basemap</title>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/opencagedata/leaflet-opencage-search@d4cbd36122efc8d17152b4177ed0e12165305441/dist/css/L.Control.OpenCageData.Search.min.css"/>
 <script src="https://cdn.jsdelivr.net/gh/opencagedata/leaflet-opencage-search@d4cbd36122efc8d17152b4177ed0e12165305441/dist/js/L.Control.OpenCageSearch.min.js"></script>
 <style>
-  @import url(https://fonts.googleapis.com/css?family=Open + Sans);
   html,
   body {
     margin: 0;
     padding: 0;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Cairo";
   }
   #info {
     position: fixed;
@@ -71,7 +78,8 @@
       maxBounds: [
         [90, -180],
         [-90, 180],
-      ],});
+      ]
+    });
 
     var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
   	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
@@ -81,12 +89,12 @@
 //ADD GEOJSON OF CONFLICTS
     //Set style options
     var clashrender = {
-      radius: 8,
+      radius: 6,
       fillColor: "#ff7800",
       color: "#000",
       weight: 1,
       opacity: 1,
-      fillOpacity: 0.6
+      fillOpacity: 0.4
     };
     //convert geojson to point layer to add styling
     L.geoJson(clashes, {
@@ -94,6 +102,10 @@
         return L.circleMarker(latlng, clashrender);
       }
     }).addTo(mymap);
+
+
+//TESTING GEOJSON W/ TIME timeDimension
+
 
     var ZoomViewer = L.Control.extend({
       onAdd: function(){
