@@ -68,14 +68,14 @@
     <div id='map'></div>
     <div id="console">
       <h1>Mapping Tweets in the Russia-Ukraine War (2022)</h1>
-      <div class="session">
-        <h2>Month: <label id="active-hour">February</label></h2>
+      <div class="session" id = "sliderbar">
+        <h2>Month: <label id="active-month"></label></h2>
         <input
           id="slider"
           class="row"
           type="range"
           min="0"
-          max="9"
+          max="8"
           step="1"
           value="0"
         />
@@ -103,17 +103,31 @@
       type: 'circle',
       source: 'ukraine_battles-68qptn',
       "source-layer": 'ukraine_battles-68qptn',
-      //filter: ['==', ['string', ['get', 'Month']], 'March']
+      //filter: ['==', ['number', ['get', 'MONTH2']], 2]
   });
 
-    document.getElementById('slider').addEventListener('input', (event) => {
-      const month = parseInt(event.target.value);
-      // update the map
-      map.setFilter('ukraine_battles-bcog7a', ['==', ['string', ['get', 'Month']], month]);
-      // update text in the UI
-      document.getElementById('active-hour').innerText = month
+    // document.getElementById('slider').addEventListener('input', (event) => {
+    //   const month = parseInt(event.target.value);
+    //   // update the map
+    //   map.setFilter('ukraine_battles-68qptn', ['==', ['number', ['get', 'MONTH2']], month]);
+    //   // update text in the UI
+    //   document.getElementById('active-month').innerText = month
+    // });
+
+    filterBy(0);
+    document.getElementById('slider').addEventListener('input', (e) => {
+        var month = parseInt(e.target.value);
+        filterBy(month);
     });
-  });
+    function filterBy(month) {
+      var months = ['February','March','April','May','June',
+                'July','August','September','October'];
+      var filters = ['==', 'MONTH2', month];
+      map.setFilter('ukraine_battles-68qptn', filters);
+      //Set the label to the month
+      document.getElementById('active-month').textContent = months[month];
+    }
+});
     </script>
   </body>
 </html>
