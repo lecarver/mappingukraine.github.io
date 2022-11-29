@@ -11,6 +11,7 @@
     <!-- FONT STYLESHEETS -->
     <link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
 
+    <script src = "javascript/ukraine_battles.js"></script>
     <style>
       body {
   margin: 0;
@@ -74,7 +75,7 @@ a {
     type: 'circle',
     source: {
       type: 'geojson',
-      data: 'data/ukraine_battles.geojson' // replace this with the url of your own geojson
+      data: battles// replace this with the url of your own geojson
     }
   });
 });
