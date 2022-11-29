@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <title>Mapping Ukraine</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <!--MAPBOX SCRIPTS-->
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+
+    <!-- FONT STYLESHEETS -->
+    <link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
+
+    <style>
+      body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Cairo';
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+h1 {
+  font-size: 20px;
+  line-height: 30px;
+}
+
+h2 {
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: 'white';
+}
+
+#console {
+  position: absolute;
+  width: 475px;
+  height: 500px;
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: rgb(100, 101, 102, .6);
+}
+    </style>
+  </head>
+  <body>
+    <div id='map'></div>
+    <div id='console'>
+      <h1>Mapping Tweets in the Russia-Ukraine War (2022)</h1>
+  </div>
+    <script>
+    // The value for 'accessToken' begins with 'pk...'
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGVjYXJ2ZXIiLCJhIjoiY2w0ZTZmZzJ6MDBqNTNmb3g1OHN0cGk0bCJ9.k4INybsqUGMfjtQS6zB3Sg';
+    const map = new mapboxgl.Map({
+      container: 'map',
+      // Replace YOUR_STYLE_URL with your style URL.
+      style: 'mapbox://styles/lecarver/cl4h7sr6m000i15o0yn6okawc',
+      center: [27.75, 49],
+      zoom: 5.75
+    });
+
+    // Code from the next step will go here.
+
+    </script>
+  </body>
+</html>
