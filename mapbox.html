@@ -74,10 +74,10 @@
           id="slider"
           class="row"
           type="range"
-          min="0"
-          max="8"
+          min="1"
+          max="10"
           step="1"
-          value="0"
+          value="1"
         />
       </div>
     </div>
@@ -116,11 +116,11 @@
 
     filterBy(0);
     document.getElementById('slider').addEventListener('input', (e) => {
-        var month = parseInt(e.target.value);
+        var month = parseInt(e.target.value, 10);
         filterBy(month);
     });
     function filterBy(month) {
-      var months = ['February','March','April','May','June',
+      var months = ['','','February','March','April','May','June',
                 'July','August','September','October'];
       var filters = ['==', 'MONTH2', month];
       map.setFilter('ukraine_battles-68qptn', filters);
