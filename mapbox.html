@@ -30,12 +30,12 @@
       }
 
       h1 {
-        font-size: 20px;
+        font-size: 27px;
         line-height: 30px;
       }
 
       h2 {
-        font-size: 14px;
+        font-size: 20px;
         line-height: 20px;
         margin-bottom: 10px;
       }
@@ -48,7 +48,7 @@
     #console {
       position: absolute;
       margin: 10px;
-      width: 240px;
+      width: 550px;
       background-color: rgb(130, 130, 129, .6);
       padding: 10px 20px;
     }
@@ -65,9 +65,11 @@
     </style>
   </head>
   <body>
+<!--MAP CONTAINER-->
     <div id='map'></div>
+<!--CONSOLE WITH TIME SLIDER-->
     <div id="console">
-      <h1>Mapping Tweets in the Russia-Ukraine War (2022)</h1>
+      <h1>Mapping Tweets in the Russia-Ukraine War: February - October 2022</h1>
       <div class="session" id = "sliderbar">
         <h2>Month: <label id="active-month"></label></h2>
         <input
@@ -82,15 +84,16 @@
       </div>
     </div>
     <script>
-    // The value for 'accessToken' begins with 'pk...'
+//SET UP BASEMAP
     mapboxgl.accessToken = 'pk.eyJ1IjoibGVjYXJ2ZXIiLCJhIjoiY2w0ZTZmZzJ6MDBqNTNmb3g1OHN0cGk0bCJ9.k4INybsqUGMfjtQS6zB3Sg';
     const map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/mapbox/dark-v11',
+      style: 'mapbox://styles/lecarver/cl4h7sr6m000i15o0yn6okawc',
       center: [27.75, 49],
       zoom: 5.75
     });
 
+//LOAD UKRAINE BATTLE LAYERS-- WE LOAD SEVERAL LAYERS WITH DIFFERENT STYLING TO GIVE 'GLOW' EFFECT
   map.on('load', () => {
     map.addSource('ukraine_battles-68qptn',{
       type: 'vector',
