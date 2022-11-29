@@ -86,8 +86,6 @@
     mapboxgl.accessToken = 'pk.eyJ1IjoibGVjYXJ2ZXIiLCJhIjoiY2w0ZTZmZzJ6MDBqNTNmb3g1OHN0cGk0bCJ9.k4INybsqUGMfjtQS6zB3Sg';
     const map = new mapboxgl.Map({
       container: 'map',
-      // Replace YOUR_STYLE_URL with your style URL.
-      //style: 'mapbox://styles/lecarver/cl4h7sr6m000i15o0yn6okawc',
       style: 'mapbox://styles/mapbox/dark-v11',
       center: [27.75, 49],
       zoom: 5.75
@@ -103,8 +101,37 @@
       type: 'circle',
       source: 'ukraine_battles-68qptn',
       "source-layer": 'ukraine_battles-68qptn',
-      //filter: ['==', ['number', ['get', 'MONTH2']], 2]
-  });
+      paint: {
+        'circle-radius':20,
+        'circle-color': '#d10000',
+        'circle-opacity': 0.4,
+        'circle-blur': 3
+      }
+    });
+    map.addLayer({
+      id: 'ukraine_battles-68qptn copy',
+      type: 'circle',
+      source: 'ukraine_battles-68qptn',
+      "source-layer": 'ukraine_battles-68qptn',
+      paint: {
+        'circle-radius': 15,
+        'circle-color': '#fb0e0e',
+        'circle-opacity': 0.4,
+        'circle-blur': 3
+      }
+    });
+    map.addLayer({
+      id: 'ukraine_battles-68qptn copy 1',
+      type: 'circle',
+      source: 'ukraine_battles-68qptn',
+      "source-layer": 'ukraine_battles-68qptn',
+      paint: {
+        'circle-radius': 10,
+        'circle-color': '#fec7c7',
+        'circle-opacity': 0.4,
+        'circle-blur': 3
+      }
+    });
 
     // document.getElementById('slider').addEventListener('input', (event) => {
     //   const month = parseInt(event.target.value);
@@ -124,6 +151,8 @@
                 'July','August','September','October'];
       var filters = ['==', 'MONTH2', month];
       map.setFilter('ukraine_battles-68qptn', filters);
+      map.setFilter('ukraine_battles-68qptn copy', filters);
+      map.setFilter('ukraine_battles-68qptn copy 1', filters);
       //Set the label to the month
       document.getElementById('active-month').textContent = months[month];
     }
