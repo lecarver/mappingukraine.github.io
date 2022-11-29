@@ -3,60 +3,84 @@
   <head>
     <meta charset='utf-8' />
     <title>Mapping Ukraine</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1' />
     <!--MAPBOX SCRIPTS-->
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css"
+      rel="stylesheet"
+    />
 
     <!-- FONT STYLESHEETS -->
     <link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
 
-    <script src = "javascript/ukraine_battles.js"></script>
     <style>
       body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Cairo';
-}
+        margin: 0;
+        padding: 0;
+        font-family: 'Cairo';
+      }
 
-#map {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-}
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
 
-h1 {
-  font-size: 20px;
-  line-height: 30px;
-}
+      h1 {
+        font-size: 20px;
+        line-height: 30px;
+      }
 
-h2 {
-  font-size: 14px;
-  line-height: 20px;
-  margin-bottom: 10px;
-}
+      h2 {
+        font-size: 14px;
+        line-height: 20px;
+        margin-bottom: 10px;
+      }
 
-a {
-  text-decoration: none;
-  color: 'white';
-}
+      a {
+        text-decoration: none;
+        color: #2dc4b2;
+      }
 
-#console {
-  position: absolute;
-  width: 475px;
-  height: 500px;
-  margin: 10px;
-  padding: 10px 20px;
-  background-color: rgb(100, 101, 102, .6);
-}
+    #console {
+      position: absolute;
+      margin: 10px;
+      width: 240px;
+      background-color: rgb(130, 130, 129, .6);
+      padding: 10px 20px;
+    }
+
+    .session {
+      margin-bottom: 20px;
+    }
+
+    .row {
+      height: 12px;
+      width: 100%;
+    }
+
     </style>
   </head>
   <body>
     <div id='map'></div>
-    <div id='console'>
+    <div id="console">
       <h1>Mapping Tweets in the Russia-Ukraine War (2022)</h1>
-  </div>
+      <div class="session">
+        <h2>Month: <label id="active-hour">February</label></h2>
+        <input
+          id="slider"
+          class="row"
+          type="range"
+          min="0"
+          max="9"
+          step="1"
+          value="0"
+        />
+      </div>
+    </div>
     <script>
     // The value for 'accessToken' begins with 'pk...'
     mapboxgl.accessToken = 'pk.eyJ1IjoibGVjYXJ2ZXIiLCJhIjoiY2w0ZTZmZzJ6MDBqNTNmb3g1OHN0cGk0bCJ9.k4INybsqUGMfjtQS6zB3Sg';
@@ -70,15 +94,26 @@ a {
     });
 
   map.on('load', () => {
-  map.addLayer({
-    id: 'battles',
-    type: 'circle',
-    source: {
-      type: 'geojson',
-      data: battles// replace this with the url of your own geojson
-    }
+    map.addSource('ukraine_battles-bcog7a',{
+      type: 'vector',
+      url: 'mapbox://lecarver.069oxryd'
+      });
+    map.addLayer({
+      id: 'ukraine_battles-bcog7a',
+      type: 'circle',
+      source: 'ukraine_battles-bcog7a',
+      "source-layer": 'ukraine_battles-bcog7a',
+      //filter: ['==', ['string', ['get', 'Month']], 'March']
   });
-});
+
+    document.getElementById('slider').addEventListener('input', (event) => {
+      const month = parseInt(event.target.value);
+      // update the map
+      map.setFilter('ukraine_battles-bcog7a', ['==', ['string', ['get', 'Month']], month]);
+      // update text in the UI
+      document.getElementById('active-hour').innerText = month
+    });
+  });
     </script>
   </body>
 </html>
