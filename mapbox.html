@@ -62,13 +62,22 @@ a {
     const map = new mapboxgl.Map({
       container: 'map',
       // Replace YOUR_STYLE_URL with your style URL.
-      style: 'mapbox://styles/lecarver/cl4h7sr6m000i15o0yn6okawc',
+      //style: 'mapbox://styles/lecarver/cl4h7sr6m000i15o0yn6okawc',
+      style: 'mapbox://styles/mapbox/dark-v11',
       center: [27.75, 49],
       zoom: 5.75
     });
 
-    // Code from the next step will go here.
-
+  map.on('load', () => {
+  map.addLayer({
+    id: 'battles',
+    type: 'circle',
+    source: {
+      type: 'geojson',
+      data: 'data/ukraine_battles.geojson' // replace this with the url of your own geojson
+    }
+  });
+});
     </script>
   </body>
 </html>
