@@ -135,28 +135,29 @@
         'circle-blur': 3
       }
     });
+    // ADD TWEET DATA HERE //
+    //map.addLayer({})
 
-    // document.getElementById('slider').addEventListener('input', (event) => {
-    //   const month = parseInt(event.target.value);
-    //   // update the map
-    //   map.setFilter('ukraine_battles-68qptn', ['==', ['number', ['get', 'MONTH2']], month]);
-    //   // update text in the UI
-    //   document.getElementById('active-month').innerText = month
-    // });
+// FILTERING LAYERS BY TIME
 
     filterBy(0);
     document.getElementById('slider').addEventListener('input', (e) => {
         var month = parseInt(e.target.value, 10);
         filterBy(month);
     });
+    //We set up an array of months, using blanks for 0 and 1 position so that we match month numbers
     function filterBy(month) {
       var months = ['','','February','March','April','May','June',
                 'July','August','September','October'];
+      //Set filter to filter month index against MONTH2 column in data (e.g. February is index position 2 in months array and is 2 in MONTH2 column)
       var filters = ['==', 'MONTH2', month];
       map.setFilter('ukraine_battles-68qptn', filters);
       map.setFilter('ukraine_battles-68qptn copy', filters);
       map.setFilter('ukraine_battles-68qptn copy 1', filters);
-      //Set the label to the month
+      // ADD FILTER FOR TWEET DATA HERE //
+      //map.setFilter('layerid', filters)
+
+      //Set the label in the console to the month based on the months array
       document.getElementById('active-month').textContent = months[month];
     }
 });
