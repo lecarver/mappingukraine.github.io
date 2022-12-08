@@ -62,16 +62,66 @@
       width: 100%;
     }
 
+    .legend {
+  background-color: #fff;
+  border-radius: 3px;
+  bottom: 30px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  padding: 10px;
+  position: absolute;
+  right: 10px;
+  z-index: 1;
+  }
+
+  .legend h4 {
+  margin: 0 0 10px;
+  }
+
+  .legend div span {
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  margin-right: 5px;
+  width: 10px;
+  }
+
     </style>
   </head>
   <body>
 <!--MAP CONTAINER-->
     <div id='map'></div>
+<!-- Lengend -->
+    <div id="tweets-legend" class="legend">
+    <h4>Tweets</h4>
+    <div><span style="background-color: #8b4225"></span>4987</div>
+    <div><span style="background-color: #a25626"></span>101.3</div>
+    <div><span style="background-color: #b86b25"></span>26</div>
+    <div><span style="background-color: #ca8323"></span>6</div>
+    <div><span style="background-color: #da9c20"></span>3</div>
+    <div><span style="background-color: #e6b71e"></span>2</div>
+    <div><span style="background-color: #eed322"></span>1</div>
+    <div><span style="background-color: #f2f12d"></span>0</div>
+    </div>
 <!--CONSOLE WITH TIME SLIDER-->
     <div id="console">
       <h1>Mapping Tweets in the Russia-Ukraine War: February - October 2022</h1>
+<!-- Conflict sliderbar -->
       <div class="session" id = "sliderbar">
-        <h2>Month: <label id="active-month"></label></h2>
+        <h2>Conflict Events(Month): <label id="active-month"></label></h2>
+        <input
+          id="slider"
+          class="row"
+          type="range"
+          min="1"
+          max="10"
+          step="1"
+          value="1"
+        />
+      </div>
+<!-- Tweet sliderbar -->
+      <div class="session" id = "sliderbar">
+        <h2>Tweets Count(Month): <label id="active-month1"></label></h2>
         <input
           id="slider"
           class="row"
@@ -135,8 +185,50 @@
         'circle-blur': 3
       }
     });
+
     // ADD TWEET DATA HERE //
-    //map.addLayer({})
+    	map.on('load', () => {
+    		map.addSource('tweets-7c0qmp',{
+    			'type': 'vector',
+          'tiles': ['https://studio.mapbox.com/tilesets/yaoting.4gougl19']
+    			// 'url': 'mapbox://yaoting.4gougl19'
+    			});
+    		map.addLayer({
+    			'id': 'tweets-7c0qmp',
+    			'type': 'fill',
+    			'source': 'tweets-7c0qmp',
+    			"source-layer": 'tweets-7c0qmp',
+    			// 'filter': ['==', 'MONTH2', "February"],
+    			'paint': {
+    			'fill-color': [
+    					'interpolate',
+    					['linear'],
+    					['get', 'TweetCount'],
+    					0,
+    					'#F2F12D',
+    					1,
+    					'#EED322',
+    					2,
+    					'#E6B71E',
+    					3,
+    					'#DA9C20',
+    					6,
+    					'#CA8323',
+    					26,
+    					'#B86B25',
+    					101.3,
+    					'#A25626',
+    					4987,
+    					'#8B4225',
+    				],
+    				'fill-opacity': 0.75
+    			}
+    		},
+    		'road-label-simple' // Add layer below labels
+    	 );
+    });
+
+    const tweetLegend = document.getElementById('tweets-legend');
 
 // FILTERING LAYERS BY TIME
 
@@ -154,11 +246,15 @@
       map.setFilter('ukraine_battles-68qptn', filters);
       map.setFilter('ukraine_battles-68qptn copy', filters);
       map.setFilter('ukraine_battles-68qptn copy 1', filters);
+
       // ADD FILTER FOR TWEET DATA HERE //
+      var filters = ['==', 'MONTH', month];
+      map.setFilter('tweets-7c0qmp', filters);
       //map.setFilter('layerid', filters)
 
       //Set the label in the console to the month based on the months array
       document.getElementById('active-month').textContent = months[month];
+      document.getElementById('active-month1').textContent = months[month];
     }
 });
     </script>
