@@ -63,27 +63,24 @@
     }
 
     .legend {
-  background-color: rgb(130, 130, 129, .6);
-  border-radius: 3px;
-  bottom: 30px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  padding: 10px;
-  position: absolute;
-  right: 10px;
-  z-index: 1;
-  }
-
-  .legend h4 {
-  margin: 10 0 10px;
-  }
+      border-radius: 3px;
+      bottom: 30px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      /*font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;*/
+      padding: 5px;
+      position: relative;
+      right: 10px;
+    }
+    .legend h4 {
+      margin: 10 0 10px;
+    }
 
   .legend div span {
-  border-radius: 50%;
-  display: inline-block;
-  height: 10px;
-  margin-right: 5px;
-  width: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    height: 10px;
+    margin-right: 5px;
+    width: 10px;
   }
 
     </style>
@@ -91,20 +88,7 @@
   <body>
 <!--MAP CONTAINER-->
     <div id='map'></div>
-<!-- Lengend -->
-    <div id="tweets-legend" class="legend">
-    <h4>Conflict Events</h4>
-    <div><span style="background-color: #d10000"></span>conflicts</div>
-    <h4>Tweets</h4>
-    <div><span style="background-color: #8b4225"></span>4987</div>
-    <div><span style="background-color: #a25626"></span>101.3</div>
-    <div><span style="background-color: #b86b25"></span>26</div>
-    <div><span style="background-color: #ca8323"></span>6</div>
-    <div><span style="background-color: #da9c20"></span>3</div>
-    <div><span style="background-color: #e6b71e"></span>2</div>
-    <div><span style="background-color: #eed322"></span>1</div>
-    <div><span style="background-color: #f2f12d"></span>0</div>
-    </div>
+
 <!--CONSOLE WITH TIME SLIDER-->
     <div id="console">
       <h1>Mapping Tweets in the Russia-Ukraine War: February - October 2022</h1>
@@ -121,6 +105,7 @@
           value="1"
         />
       </div>
+
 <!-- Tweet sliderbar -->
       <div class="session" id = "sliderbar">
         <h2>Tweets Count(Month): <label id="active-month1"></label></h2>
@@ -133,6 +118,20 @@
           step="1"
           value="1"
         />
+      </div>
+  <!--Legend-->
+      <div id="tweets-legend" class="legend">
+      <h4>Conflict Events</h4>
+      <div><span style="background-color: #d10000"></span>conflicts</div>
+      <h4>Tweets</h4>
+      <div><span style="background-color: #8b4225"></span>4987</div>
+      <div><span style="background-color: #a25626"></span>101.3</div>
+      <div><span style="background-color: #b86b25"></span>26</div>
+      <div><span style="background-color: #ca8323"></span>6</div>
+      <div><span style="background-color: #da9c20"></span>3</div>
+      <div><span style="background-color: #e6b71e"></span>2</div>
+      <div><span style="background-color: #eed322"></span>1</div>
+      <div><span style="background-color: #f2f12d"></span>0</div>
       </div>
     </div>
     <script>
@@ -250,7 +249,7 @@
       map.setFilter('ukraine_battles-68qptn copy 1', filters);
 
       // ADD FILTER FOR TWEET DATA HERE //
-      var filters = ['==', 'MONTH', month];
+      var filters = ['==', 'MONTH2', month];
       map.setFilter('tweets-7c0qmp', filters);
       //map.setFilter('layerid', filters)
 
