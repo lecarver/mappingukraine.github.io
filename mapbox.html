@@ -32,6 +32,7 @@
         top: 0;
         bottom: 0;
         width: 100%;
+        height: 100%;
       }
 
       h1 {
@@ -40,9 +41,12 @@
       }
 
       h2 {
-        font-size: 20px;
+        font-size: 25px;
         line-height: 20px;
         margin-bottom: 10px;
+      }
+      h4 {
+        font-size: 20px;
       }
 
       a {
@@ -69,16 +73,14 @@
 
     .legend {
       border-radius: 3px;
-      bottom: 30px;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-      /*font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;*/
-      padding: 5px;
       position: relative;
-      right: 10px;
+      column-count: 2;
+      column-gap:10px;
     }
-    .legend h4 {
-      margin: 10 0 10px;
-    }
+    /* .legend h4 {
+      margin: 10px;
+    } */
 
   .legend div span {
     border-radius: 50%;
@@ -86,6 +88,15 @@
     height: 10px;
     margin-right: 5px;
     width: 10px;
+  }
+  .c3-axis-y text {
+    font-family: 'Cairo';
+    font-size: 15px;
+  }
+
+  .c3-axis-x text {
+    font-family: 'Cairo';
+    font-size: 15px;
   }
 
     </style>
@@ -115,6 +126,8 @@
       <div id="tweets-legend" class="legend">
         <h4>Conflict Events</h4>
         <div><span style="background-color: #d10000"></span>conflicts</div>
+      </div>
+      <div id="tweets-legend2" class="legend">
         <h4>Tweets</h4>
         <div><span style="background-color: #8b4225"></span>4987</div>
         <div><span style="background-color: #a25626"></span>101.3</div>
@@ -126,7 +139,10 @@
         <div><span style="background-color: #f2f12d"></span>0</div>
       </div>
     <!--Chart-->
-    <div id="chart"></div>
+    <div id = "tweet-chart">
+        <h4> Total Tweets by Month </h4>
+        <div id="chart"></div>
+    </div>
     </div>
     <script>
 //SET UP BASEMAP
@@ -259,9 +275,32 @@
 
 //CHART
 var chart = c3.generate({
-    bindto: "#chart",
     data: {
-        url: './data/tweets.csv'
+        columns: [
+            ['TweetCount', 6419, 15512, 8329, 5380, 4598, 5878, 5792, 3551, 4312]
+        ],
+        type: 'line',
+        colors: {
+            TweetCount: '#aec7e8'
+        },
+        color: function (color, d) {
+
+            return d.id && d.id === 'data1' ? d3.rgb(color).darker(d.value / 120) : color;
+        }
+    },
+    axis: {
+      x: {
+        type: 'category',
+        categories: ['Feb.', 'March', 'April', 'May', 'June', 'July', 'August', 'Sept', 'Oct.']
+      }
+    },
+    bar: {
+        width: {
+            ratio: 0.5 // this makes bar width 50% of length between ticks
+        }
+    },
+    legend: {
+      show: false
     }
 });
 });
