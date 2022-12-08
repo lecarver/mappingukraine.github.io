@@ -94,7 +94,7 @@
       <h1>Mapping Tweets in the Russia-Ukraine War: February - October 2022</h1>
 <!-- Conflict sliderbar -->
       <div class="session" id = "sliderbar">
-        <h2>Conflict Events(Month): <label id="active-month"></label></h2>
+        <h2>Month: <label id="active-month"></label></h2>
         <input
           id="slider"
           class="row"
@@ -106,19 +106,6 @@
         />
       </div>
 
-<!-- Tweet sliderbar -->
-      <div class="session" id = "sliderbar">
-        <h2>Tweets Count(Month): <label id="active-month1"></label></h2>
-        <input
-          id="slider"
-          class="row"
-          type="range"
-          min="1"
-          max="10"
-          step="1"
-          value="1"
-        />
-      </div>
   <!--Legend-->
       <div id="tweets-legend" class="legend">
       <h4>Conflict Events</h4>
@@ -144,8 +131,43 @@
       zoom: 5.5
     });
 
-//LOAD UKRAINE BATTLE LAYERS-- WE LOAD SEVERAL LAYERS WITH DIFFERENT STYLING TO GIVE 'GLOW' EFFECT
+
   map.on('load', () => {
+    //ADD TWEET DATA
+        map.addSource('tweets_1-9ml1aq', {
+          'type': 'vector',
+          'url': 'mapbox://lecarver.2v2s1drf'
+        });
+        map.addLayer({
+          id: 'tweets_1-9ml1aq',
+          type: 'fill',
+          source: 'tweets_1-9ml1aq',
+          'source-layer': 'tweets_1-9ml1aq',
+          'paint': {
+          'fill-color': [
+              'interpolate',
+              ['linear'],
+              ['get', 'TweetCount'],
+              0,
+              '#3e3d3d',
+              10,
+              '#F2F12D',
+              50,
+              '#E6B71E',
+              150,
+              '#DA9C20',
+              1000,
+              '#CA8323',
+              1500,
+              '#A25626',
+              5000,
+              '#723122'
+            ],
+            'fill-outline-color': '#673621'
+          }
+        });
+
+//LOAD UKRAINE BATTLE LAYERS-- WE LOAD SEVERAL LAYERS WITH DIFFERENT STYLING TO GIVE 'GLOW' EFFECT
     map.addSource('ukraine_battles-68qptn',{
       type: 'vector',
       url: 'mapbox://lecarver.2uyhdnmg'
@@ -187,52 +209,9 @@
       }
     });
 
-    // ADD TWEET DATA HERE //
-    	map.on('load', () => {
-    		map.addSource('tweets-7c0qmp',{
-    			'type': 'vector',
-          'tiles': ['https://studio.mapbox.com/tilesets/yaoting.4gougl19']
-    			// 'url': 'mapbox://yaoting.4gougl19'
-    			});
-    		map.addLayer({
-    			'id': 'tweets-7c0qmp',
-    			'type': 'fill',
-    			'source': 'tweets-7c0qmp',
-    			"source-layer": 'tweets-7c0qmp',
-    			// 'filter': ['==', 'MONTH2', "February"],
-    			'paint': {
-    			'fill-color': [
-    					'interpolate',
-    					['linear'],
-    					['get', 'TweetCount'],
-    					0,
-    					'#F2F12D',
-    					1,
-    					'#EED322',
-    					2,
-    					'#E6B71E',
-    					3,
-    					'#DA9C20',
-    					6,
-    					'#CA8323',
-    					26,
-    					'#B86B25',
-    					101.3,
-    					'#A25626',
-    					4987,
-    					'#8B4225',
-    				],
-    				'fill-opacity': 0.75
-    			}
-    		},
-    		'road-label-simple' // Add layer below labels
-    	 );
-    });
-
     const tweetLegend = document.getElementById('tweets-legend');
 
 // FILTERING LAYERS BY TIME
-
     filterBy(0);
     document.getElementById('slider').addEventListener('input', (e) => {
         var month = parseInt(e.target.value, 10);
@@ -247,15 +226,10 @@
       map.setFilter('ukraine_battles-68qptn', filters);
       map.setFilter('ukraine_battles-68qptn copy', filters);
       map.setFilter('ukraine_battles-68qptn copy 1', filters);
-
-      // ADD FILTER FOR TWEET DATA HERE //
-      var filters = ['==', 'MONTH2', month];
-      map.setFilter('tweets-7c0qmp', filters);
-      //map.setFilter('layerid', filters)
+      map.setFilter('tweets_1-9ml1aq', filters);
 
       //Set the label in the console to the month based on the months array
       document.getElementById('active-month').textContent = months[month];
-      document.getElementById('active-month1').textContent = months[month];
     }
 });
     </script>
