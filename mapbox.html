@@ -275,7 +275,7 @@
       map.getCanvas().style.cursor = '';
     });
 
-//CHART
+// CREATE CHART OF TOTAL TWEET BY MONTH
 var chart = c3.generate({
     data: {
         columns: [
@@ -286,7 +286,6 @@ var chart = c3.generate({
             TweetCount: '#aec7e8'
         },
         color: function (color, d) {
-
             return d.id && d.id === 'data1' ? d3.rgb(color).darker(d.value / 120) : color;
         }
     },
