@@ -71,6 +71,10 @@
       width: 100%;
     }
 
+    #mouseover-properties{
+      font-size: 20px;
+    }
+
     .legend {
       border-radius: 3px;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -122,7 +126,11 @@
           value="1"
         />
       </div>
-
+  <!--Show Tweets by Administrative Area on mouse hover-->
+      <div id ='mouseover-properties'>
+        <div><strong>Administrative Area: <span id='admin'></span></strong></div>
+        <div><span id = 'tweets'></span> tweets in <span id='month'></span></div>
+      </div>
   <!--Legend-->
       <div id="tweets-legend" class="legend">
         <h4>Conflict Events</h4>
@@ -187,7 +195,13 @@
               5000,
               '#723122'
             ],
-            'fill-outline-color': '#673621'
+            'fill-outline-color': '#673621',
+            'fill-opacity': [
+              'case',
+              ['boolean', ['feature-state', 'hover'], false],
+              1,
+              0.6
+            ]
           }
         });
 
@@ -256,24 +270,47 @@
       document.getElementById('active-month').textContent = months[month];
     }
 // POP-UPs FOR ADMIN BOUNDARIES
-    map.on('click', 'tweets_1-9ml1aq', (e) => {
-      new mapboxgl.Popup()
-      .setLngLat(e.lngLat)
-      .setHTML(e.features[0].properties + e.features[0].TweetCount)
-      .addTo(map);
-    });
+    //Highlight administrative boudary on mouse hover
+    let hoveredStateId = null
+    const adminDisplay = document.getElementById('admin');
+    const tweetDisplay = document.getElementById('tweets');
+    const monthDisplay = document.getElementById('month');
 
-    // Change the cursor to a pointer when
-    // the mouse is over the states layer.
-    map.on('mouseenter', 'tweets_1-9ml1aq', () => {
-      map.getCanvas().style.cursor = 'pointer';
-    });
+      map.on('mousemove', 'tweets_1-9ml1aq', (e) => {
+        const name = e.features[0].properties.Name;
+        const tweets = e.features[0].properties.TweetCount;
+        const month = e.features[0].properties.Month;
 
-    // Change the cursor back to a pointer
-    // when it leaves the states layer.
-    map.on('mouseleave', 'tweets_1-9ml1aq', () => {
-      map.getCanvas().style.cursor = '';
-    });
+        if (e.features.length > 0) {
+          if (hoveredStateId !== null) {
+            map.setFeatureState(
+              { source: 'tweets_1-9ml1aq',sourceLayer: 'tweets_1-9ml1aq', id: hoveredStateId },
+              { hover: false }
+            );
+          }
+          hoveredStateId = e.features[0].id;
+          map.setFeatureState(
+          { source: 'tweets_1-9ml1aq',sourceLayer: 'tweets_1-9ml1aq', id: hoveredStateId },
+          { hover: true }
+          );
+        }
+        if (e.features.length === 0) return;
+        adminDisplay.textContent = name;
+        tweetDisplay.textContent = tweets;
+        monthDisplay.textContent = month;
+      });
+
+    //Drop highlight when mouse leaves
+      map.on('mouseleave', 'state-fills', () => {
+        if (hoveredStateId !== null) {
+          map.setFeatureState(
+            { source: 'states', id: hoveredStateId },
+            { hover: false }
+          );
+        }
+        hoveredStateId = null;
+      });
+
 
 // CREATE CHART OF TOTAL TWEET BY MONTH
 var chart = c3.generate({
