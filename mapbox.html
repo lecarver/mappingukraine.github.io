@@ -90,10 +90,16 @@
       position: relative;
     }
 
+    #tweets-legend1{
+      column-count: 3;
+      column-gap:0px;
+    }
+
     #tweets-legend2{
       column-count: 3;
       column-gap:10px;
     }
+
     .legend div span {
       border-radius: 50%;
       display: inline-block;
@@ -147,20 +153,21 @@
         <div><span id = 'tweets'></span> tweets in <span id='month'></span></div>
       </div>
   <!--Legend-->
-      <div id="tweets-legend" class="legend">
+      <div id="tweets-legend2" class="legend">
         <h4>Conflict Events</h4>
+        <div><span style="background-color: rgba(0, 0, 0, 0)"></span></div>
         <div><span style="background-color: #d10000"></span></div>
       </div>
       <div id="tweets-legend2" class="legend">
         <h4>Tweets</h4>
-        <div><span style="background-color: #da9c20"></span>3</div>
-        <div><span style="background-color: #e6b71e"></span>2</div>
-        <div><span style="background-color: #eed322"></span>1</div>
-        <div><span style="background-color: #f2f12d"></span>0</div>
-        <div><span style="background-color: #8b4225"></span>4987</div>
-        <div><span style="background-color: #a25626"></span>101.3</div>
-        <div><span style="background-color: #b86b25"></span>26</div>
-        <div><span style="background-color: #ca8323"></span>6</div>
+        <div><span style="background-color: #9ebcda"></span>3</div>
+        <div><span style="background-color: #bfd3e6"></span>2</div>
+        <div><span style="background-color: #e0ecf4"></span>1</div>
+        <div><span style="background-color: #f7fcfd"></span>0</div>
+        <div><span style="background-color: #6e016b"></span>4987</div>
+        <div><span style="background-color: #88419d"></span>101.3</div>
+        <div><span style="background-color: #8c6bb1"></span>26</div>
+        <div><span style="background-color: #8c96c6"></span>6</div>
 
       </div>
     <!--Chart-->
@@ -196,19 +203,22 @@
               ['linear'],
               ['get', 'TweetCount'],
               0,
-              '#3e3d3d',
-              10,
-              '#F2F12D',
-              50,
-              '#E6B71E',
-              150,
-              '#DA9C20',
-              1000,
-              '#CA8323',
-              1500,
-              '#A25626',
-              5000,
-              '#723122'
+    					'#f7fcfd',
+    					1,
+    					'#e0ecf4',
+    					2,
+    					'#bfd3e6',
+    					3,
+    					'#9ebcda',
+    					6,
+    					'#8c96c6',
+    					26,
+    					'#8c6bb1',
+    					101.3,
+    					'#88419d',
+    					4987,
+    					'#6e016b'
+
             ],
             'fill-outline-color': '#673621',
             'fill-opacity': [
