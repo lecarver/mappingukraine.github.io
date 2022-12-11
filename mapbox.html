@@ -57,7 +57,7 @@
     #console {
       position: absolute;
       margin: 10px;
-      width: 500px;
+      width: 300px;
       background-color: rgb(130, 130, 129, .6);
       padding: 10px 20px;
     }
@@ -84,17 +84,6 @@
       font-size: 20px;
     }
 
-    .legend {
-      border-radius: 3px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-      position: relative;
-    }
-
-    #tweets-legend1{
-      column-count: 3;
-      column-gap:0px;
-    }
-
     #tweets-legend2{
       column-count: 3;
       column-gap:10px;
@@ -117,9 +106,65 @@
       font-size: 15px;
     }
 
+
+    /* Button used to open the contact form - fixed at the bottom of the page */
+    .open-button {
+      background-color: rgb(130, 130, 129, .6);
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      opacity: 0.8;
+      position: fixed;
+      bottom: 23px;
+      right: 28px;
+      width: 280px;
+    }
+
+    /* The popup form - hidden by default */
+    .form-popup {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      right: 15px;
+      border: 3px solid #f1f1f1;
+      z-index: 9;
+    }
+
+    /* Add styles to the form container */
+    .form-container {
+      width: 500px;
+      padding: 10px;
+      background-color:rgb(130, 130, 129, .6);
+    }
+
+    /* Set a style for the chart button */
+    .form-container .btn {
+      background-color: #04AA6D;
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom:10px;
+      opacity: 0.8;
+    }
+
+    /* Add a background color to the close button */
+    .form-container .cancel {
+      background-color: rgb(130, 130, 129);
+    }
+
+    /* Add some hover effects to buttons */
+    .form-container .btn:hover, .open-button:hover {
+      opacity: 1;
+    }
+
+
     </style>
   </head>
-  <body>
+
+<body>
 <!--MAP CONTAINER-->
     <div id='map'></div>
 
@@ -132,7 +177,6 @@
         <div class = 'button'>
           <a href="https://github.com/lecarver/mappingukraine.github.io/">GitHub</a>
         </div>
-      </div>
       <h1>Mapping Tweets in the Russia-Ukraine War: February - October 2022</h1>
 <!-- Conflict sliderbar -->
       <div class="session" id = "sliderbar">
@@ -154,7 +198,7 @@
       </div>
   <!--Legend-->
       <div id="tweets-legend2" class="legend">
-        <h4>Conflict Events</h4>
+        <h4>Conflicts</h4>
         <div><span style="background-color: rgba(0, 0, 0, 0)"></span></div>
         <div><span style="background-color: #d10000"></span></div>
       </div>
@@ -170,21 +214,43 @@
         <div><span style="background-color: #8c96c6"></span>6</div>
 
       </div>
-    <!--Chart-->
-    <div id = "tweet-chart">
-        <h4> Total Tweets by Month </h4>
-        <div id="chart"></div>
     </div>
+  </div>
+
+    <!-- popup -->
+   <button class="open-button" onclick="openForm()">Total Tweets by Month</button>
+
+    <div class="form-popup" id="myForm">
+      <form action="/action_page.php" class="form-container">
+        <div id = "tweet-chart">
+            <h4> Total Tweets by Month </h4>
+            <div id="chart"></div>
+        </div>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+      </form>
     </div>
+
+    <script>
+    function openForm() {
+      document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+    }
+    </script>
+
+
     <script>
 //SET UP BASEMAP
     mapboxgl.accessToken = 'pk.eyJ1IjoibGVjYXJ2ZXIiLCJhIjoiY2w0ZTZmZzJ6MDBqNTNmb3g1OHN0cGk0bCJ9.k4INybsqUGMfjtQS6zB3Sg';
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/lecarver/cl4h7sr6m000i15o0yn6okawc',
-      center: [30.75, 49.5],
-      zoom: 5.5,
+      center: [29.75, 48.5],
+      zoom: 5.3,
     });
+
 
   map.on('load', () => {
     //ADD TWEET DATA
@@ -362,6 +428,10 @@ var chart = c3.generate({
     },
     legend: {show: false}
   });
+
+
+
+
 });
     </script>
   </body>
