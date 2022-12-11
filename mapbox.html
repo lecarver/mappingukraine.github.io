@@ -9,8 +9,7 @@
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
     <link
       href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
 
     <!-- FONT STYLESHEETS -->
     <link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
@@ -26,7 +25,6 @@
         padding: 0;
         font-family: 'Cairo';
       }
-
       #map {
         position: absolute;
         top: 0;
@@ -34,12 +32,10 @@
         width: 100%;
         height: 100%;
       }
-
       h1 {
         font-size: 27px;
         line-height: 30px;
       }
-
       h2 {
         font-size: 25px;
         line-height: 20px;
@@ -48,12 +44,10 @@
       h4 {
         font-size: 20px;
       }
-
       a {
         text-decoration: none;
         color: black;
       }
-
     #console {
       position: absolute;
       margin: 10px;
@@ -74,21 +68,17 @@
     .session {
       margin-bottom: 20px;
     }
-
     .row {
       height: 12px;
       width: 100%;
     }
-
     #mouseover-properties{
       font-size: 20px;
     }
-
     #tweets-legend2{
       column-count: 3;
       column-gap:10px;
     }
-
     .legend div span {
       border-radius: 50%;
       display: inline-block;
@@ -100,13 +90,10 @@
       font-family: 'Cairo';
       font-size: 15px;
     }
-
     .c3-axis-x text {
       font-family: 'Cairo';
       font-size: 15px;
     }
-
-
     /* Button used to open the contact form - fixed at the bottom of the page */
     .open-button {
       background-color: rgb(130, 130, 129, .6);
@@ -120,7 +107,6 @@
       right: 28px;
       width: 280px;
     }
-
     /* The popup form - hidden by default */
     .form-popup {
       display: none;
@@ -130,14 +116,12 @@
       border: 3px solid #f1f1f1;
       z-index: 9;
     }
-
     /* Add styles to the form container */
     .form-container {
       width: 500px;
       padding: 10px;
       background-color:rgb(130, 130, 129, .6);
     }
-
     /* Set a style for the chart button */
     .form-container .btn {
       background-color: #04AA6D;
@@ -149,25 +133,20 @@
       margin-bottom:10px;
       opacity: 0.8;
     }
-
     /* Add a background color to the close button */
     .form-container .cancel {
       background-color: rgb(130, 130, 129);
     }
-
     /* Add some hover effects to buttons */
     .form-container .btn:hover, .open-button:hover {
       opacity: 1;
     }
-
-
     </style>
   </head>
 
 <body>
 <!--MAP CONTAINER-->
     <div id='map'></div>
-
 <!--CONSOLE WITH TIME SLIDER-->
     <div id="console">
       <div id="menu">
@@ -215,7 +194,7 @@
     </div>
   </div>
 
-    <!-- popup -->
+    <!-- CHART POPUP -->
    <button class="open-button" onclick="openForm()">Total Tweets by Month</button>
 
     <div class="form-popup" id="myForm">
@@ -238,9 +217,8 @@
     }
     </script>
 
-
-    <script>
-//SET UP BASEMAP
+  <script>
+  //SET UP BASEMAP
     mapboxgl.accessToken = 'pk.eyJ1IjoibGVjYXJ2ZXIiLCJhIjoiY2w0ZTZmZzJ6MDBqNTNmb3g1OHN0cGk0bCJ9.k4INybsqUGMfjtQS6zB3Sg';
     const map = new mapboxgl.Map({
       container: 'map',
@@ -251,7 +229,7 @@
 
 
   map.on('load', () => {
-    //ADD TWEET DATA
+    //LOAD TWEET DATA
         map.addSource('tweets_1-9ml1aq', {
           'type': 'vector',
           'url': 'mapbox://lecarver.2v2s1drf'
@@ -333,7 +311,6 @@
         'circle-blur': 3
       }
     });
-
     const tweetLegend = document.getElementById('tweets-legend');
 
 // FILTERING LAYERS BY TIME
@@ -356,8 +333,8 @@
       //Set the label in the console to the month based on the months array
       document.getElementById('active-month').textContent = months[month];
     }
-// POP-UPs FOR ADMIN BOUNDARIES
-    //Highlight administrative boudary on mouse hover
+// INFO BOX FOR FOR ADMIN BOUNDARIES IN CONSOLE
+    //Highlight administrative bouNdary on mouse hover & grab month, region name, and tweet count properties
     let hoveredStateId = null
     const adminDisplay = document.getElementById('admin');
     const tweetDisplay = document.getElementById('tweets');
@@ -397,8 +374,6 @@
         }
         hoveredStateId = null;
       });
-
-
 // CREATE CHART OF TOTAL TWEET BY MONTH
 var chart = c3.generate({
     data: {
@@ -417,17 +392,9 @@ var chart = c3.generate({
         categories: ['Feb.', 'March', 'April', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.']
       }
     },
-    bar: {
-        width: {
-            ratio: 0.5 // this makes bar width 50% of length between ticks
-        }
-    },
+    bar: {width: {ratio: 0.5}},
     legend: {show: false}
   });
-
-
-
-
 });
     </script>
   </body>
