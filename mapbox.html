@@ -56,14 +56,14 @@
     #console {
       position: absolute;
       margin: 10px;
-      width: 300px;
+      width: 430px;
       background-color: rgb(130, 130, 129, .6);
       padding: 10px 20px;
     }
     .button{
       background-color: rgb(130, 130, 129);
       border: none;
-      padding: 3px 30px;
+      padding: 3px 15px;
       text-align: center;
       display: inline-block;
       font-size: 16px;
@@ -124,8 +124,8 @@
     }
     /* Add styles to the form container */
     .form-container {
-      width: 500px;
-      padding: 10px;
+      width: 430px;
+      padding: 10px 20px;
       background-color:#EEEEEE;
     }
     /* Set a style for the chart button */
@@ -230,9 +230,9 @@
     <!--Chart-->
     <div id = "tweet-chart">
         <button class="button" onclick="openForm()">Total Tweets by Month</button>
-        <div style="width: 500px;"  class="form-popup" id="myForm">
+        <div   class="form-popup" id="myForm">
           <form action="/action_page.php" class="form-container">
-            <div style="width: 480px;" id = "tweet-chart">
+            <div id = "tweet-chart">
                 <h4> Total Tweets by Month </h4>
                 <div id="chart"></div>
             </div>
@@ -258,7 +258,7 @@
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/lecarver/cl4h7sr6m000i15o0yn6okawc',
-      center: [29.75, 48.5],
+      center: [28.75, 48.75],
       zoom: 5.3,
     });
 
@@ -424,7 +424,7 @@ var chart = c3.generate({
     axis: {
       x: {
         type: 'category',
-        categories: ['Feb.', 'March', 'April', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.']
+        categories: ['Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.']
       }
     },
     bar: {width: {ratio: 0.5}},
